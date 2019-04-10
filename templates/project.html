@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<style>
+			video {
+				max-width: 640px;
+				max-height: 640px;
+			}
+		</style>
+		<script>
+			
+		</script>
+		<title>Multimedia</title>
+	</head>
+	<body>
+		<h1>Multimedia</h1>
+		<h2><a href='/'>Back</a></h2>
+		<h2>Project {{proj}}</h2>
+		<h3>Input:</h3>
+		<form action='/upload/{{proj}}' method=post enctype=multipart/form-data>
+			<input type=file name=file>
+			<input type=submit value=Upload>
+		</form>
+		{% if has_in %}
+			<video controls src='/videos/{{proj}}.in'> </video>
+		{% endif %}
+		<h3>Output:</h3>
+		{% if has_out %}
+			<video controls src='/videos/{{proj}}.out'> </video>
+		{% endif %}
+	</body>
+</html>
