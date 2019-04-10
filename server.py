@@ -1,6 +1,6 @@
 import os
 import sys
-from flask import Flask, request, flash, redirect, render_template, send_file
+from flask import Flask, request, flash, redirect, render_template, send_from_directory
 app = Flask(__name__)
 
 UPLOAD_FOLDER = './videos'
@@ -10,7 +10,6 @@ def landing():
 	l = []
 	for d, _, f in os.walk(UPLOAD_FOLDER):
 		for fn in f:
-			sys.stderr.write(str(fn))
 			if fn[-3:] == '.in':
 				l += [fn[:-3]]
 	return render_template('main.html', projects=l)
@@ -35,4 +34,4 @@ def project_page(s):
 
 @app.route("/videos/<s>", methods=['GET'])
 def get_uploaded_file(s):
-	return send_file(os.path.join(UPLOAD_FOLDER, s))
+	return send_from_directory(UPLOAD_FOLDER, s, cache_timeout=10)
