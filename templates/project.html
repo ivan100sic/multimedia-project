@@ -1,16 +1,9 @@
 <html>
 	<head>
-		<style>
-			video {
-				max-width: 640px;
-				max-height: 640px;
-			}
-		</style>
-		<script src='/static/jquery-3.3.0.min.js'>
-			
-		</script>
+		<link rel='stylesheet' type='text/css' href='/static/style.css'/> 
+		<script src='/static/jquery-3.3.0.min.js'></script>
 		<script>
-			var s = '{{ proj }}';
+			var s = '{{proj}}';
 
 			function check_cb(data, status, jj) {
 				console.log(data)
@@ -27,31 +20,71 @@
 				$.post('/check/'+s, '', check_cb)
 			}
 
+			function disable_effects() {
+				var btns = document.getElementsByClassName('effect')
+				console.log(btns);
+				for (var i = 0; i < btns.length; i++) {
+					btns[i].disabled = true;
+					btns[i].style.backgroundColor = '#66a';
+				}
+				document.getElementById('please-wait-label').innerHTML =
+					'Please wait, the page will reload automatically...';
+			}
+
 			function apply(e) {
 				$.post('/apply/'+e+'/'+s);
+				disable_effects();
 				setTimeout(check, 2000);
 			}
 		</script>
 		<title>Multimedia</title>
 	</head>
 	<body>
-		<h1>Multimedia</h1>
-		<h2><a href='/'>Back</a></h2>
-		<h2>Project {{proj}}</h2>
-		<h3>Input:</h3>
-		<form action='/upload/{{proj}}' method=post enctype=multipart/form-data>
-			<input type=file name=file>
-			<input type=submit value=Upload>
-		</form>
-		{% if has_in %}
-			<video controls src='/videos/{{rand}}{{proj}}.in'> </video>
-			{% for e in effects.keys() %}
-				<button onclick=apply('{{e}}','{{proj}}')> {{effects[e]}} </button>
-			{% endfor %}
-		{% endif %}
-		<h3>Output:</h3>
-		{% if has_out %}
-			<video controls src='/videos/{{rand}}{{proj}}.out'> </video>
-		{% endif %}
+		<div class='content'>
+			<h1>Multimedia</h1>
+			<center>
+				<a class='fancy narrowed' href='/'>Back</a>
+			</center>
+			<h2><span class='light'>Project name: </span>{{proj}}</h2>
+			<h2>Input:</h2>
+			<center>
+				<form action='/upload/{{proj}}' method=post enctype=multipart/form-data>
+					<input type="file" name="file" id="file" class="inputfile" />
+					<p><label class='fancy narrowed' id='choose-file-label'
+						for="file">Choose a file...</label> </p>
+					<p> <input class='fancy' type=submit value=Upload> </p>
+				</form>
+			</center>
+			{% if has_in %}
+				<center>
+					<video controls src='/videos/{{rand}}{{proj}}.in'> </video>
+				</center>
+				{% for e,f in effects %}
+					<h2>
+						<button class='effect fancy' onclick=apply('{{e}}','{{proj}}')>
+							{{f}}
+						</button>
+					</h2>
+				{% endfor %}
+			{% endif %}
+			<h2>Output:</h2>
+			<h2 class='light' id='please-wait-label'></h2>
+			{% if has_out %}
+				<center>
+					<video controls src='/videos/{{rand}}{{proj}}.out'> </video>
+				</center>
+			{% endif %}
+		</div>
 	</body>
+	<script type="text/javascript">
+		var inp = document.getElementById('file');
+		var lbl = document.getElementById('choose-file-label');
+		inp.addEventListener('change', function(e) {
+			if (inp.files.length == 1) {
+				lbl.innerHTML = inp.files[0].name;
+			} else {
+				lbl.innerHTML = 'Choose a file...';
+			}
+		});
+	</script>
 </html>

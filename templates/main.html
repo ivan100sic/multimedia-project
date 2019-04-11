@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<link rel='stylesheet' type='text/css' href='/static/style.css'/> 
 		<script>
 			function np() {
 				var s = prompt('Project name:')
@@ -11,11 +12,17 @@
 		<title>Multimedia</title>
 	</head>
 	<body>
-		<h1>Multimedia</h1>
-		<h2>List of available projects:</h2>
-		{% for proj in projects %}
-			<h3> <a href='/project/{{proj}}'>{{proj}}</a> </h3>
-		{% endfor %}
-		<h2> <button onclick='np()'>Create a new project</button> </h2>
+		<div class='content'>
+			<h1>Multimedia</h1>
+			<h2>List of available projects:</h2>
+			{% for proj in projects %}
+				<center> <p>
+					<a class='fancy narrowed lightblue' href='/project/{{proj}}'>{{proj}}</a>
+				</p></center>
+			{% endfor %}
+			<h2 ><button onclick='np()'
+				class='fancy new-project-btn'>Create a new project</button>
+			</h2>
+		</div>
 	</body>
 </html>

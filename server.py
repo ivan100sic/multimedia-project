@@ -7,7 +7,11 @@ from flask import Flask, request, flash, redirect, render_template, send_from_di
 app = Flask(__name__)
 
 UPLOAD_FOLDER = './videos'
-EFFECTS = {'gmajor' : 'G Major', 'test-effect': 'Test effect'}
+EFFECTS = [
+	('test-effect', 'Test effect'),
+	('gmajor', 'G Major'),
+	('reverb', 'Reverb'),
+]
 
 def random_string(n):
 	a = ""
@@ -28,6 +32,7 @@ def landing():
 		for fn in f:
 			if fn[-3:] == '.in':
 				l += [fn[:-3]]
+	l = list(sorted(l))
 	return render_template('main.html', projects=l)
 
 @app.route("/upload/<s>", methods=['POST'])
@@ -66,9 +71,10 @@ def get_uploaded_file(s):
 def apply_effect(s, e):
 	if not name_ok(s):
 		return redirect('/')
-	if not e in EFFECTS:
+	if not e in [x[0] for x in EFFECTS]:
 		return redirect('/')
-	os.remove(os.path.join(UPLOAD_FOLDER, s + '.out'))
+	if os.path.isfile(os.path.join(UPLOAD_FOLDER, s + '.out')):
+		os.remove(os.path.join(UPLOAD_FOLDER, s + '.out'))
 	subprocess.Popen(['./'+e, os.path.join(UPLOAD_FOLDER, s)])
 	return 'Started...'
 	
@@ -80,3 +86,6 @@ def check_if_done(s):
 		return '1'
 	else:
 		return '0'
+
+# Razmisliti o izdvajanju thumbnaila i onda pravljenju jako fensi
+# glavne stranice
