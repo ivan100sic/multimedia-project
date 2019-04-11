@@ -6,8 +6,31 @@
 				max-height: 640px;
 			}
 		</style>
-		<script>
+		<script src='/static/jquery-3.3.0.min.js'>
 			
+		</script>
+		<script>
+			var s = '{{ proj }}';
+
+			function check_cb(data, status, jj) {
+				console.log(data)
+				console.log(status)
+				if (status == 'success' && data == '1') {
+					location.reload();
+				} else {
+					setTimeout(check, 1000);
+				}
+			}
+
+			function check() {
+				console.log('checking')
+				$.post('/check/'+s, '', check_cb)
+			}
+
+			function apply(e) {
+				$.post('/apply/'+e+'/'+s);
+				setTimeout(check, 2000);
+			}
 		</script>
 		<title>Multimedia</title>
 	</head>
@@ -21,11 +44,14 @@
 			<input type=submit value=Upload>
 		</form>
 		{% if has_in %}
-			<video controls src='/videos/{{proj}}.in'> </video>
+			<video controls src='/videos/{{rand}}{{proj}}.in'> </video>
+			{% for e in effects.keys() %}
+				<button onclick=apply('{{e}}','{{proj}}')> {{effects[e]}} </button>
+			{% endfor %}
 		{% endif %}
 		<h3>Output:</h3>
 		{% if has_out %}
-			<video controls src='/videos/{{proj}}.out'> </video>
+			<video controls src='/videos/{{rand}}{{proj}}.out'> </video>
 		{% endif %}
 	</body>
 </html>
