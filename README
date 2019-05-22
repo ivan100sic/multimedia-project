@@ -1,0 +1,6 @@
+Setup instructions for Ubuntu 16.04:
+
+sudo python3 -m pip install flask
+sudo apt install ffmpeg
+bash server.sh
+

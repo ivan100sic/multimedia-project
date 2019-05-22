@@ -1,0 +1,83 @@
+body {
+	background-color: #eee;
+	font-family: Arial;
+}
+
+div.content {
+	background-color: #fff;
+	margin: auto;
+	padding: 16px;
+	padding-bottom: 120px;
+	width: 940px;
+}
+
+.light {
+	color: #888;
+}
+
+.project {
+	color: #888;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+/* button, input[type="submit"], label.choose-file-label */
+.fancy {
+	background-color: #008;
+	border: none;
+	color: white;
+	padding: 12px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 30px;
+	width: 900px;
+	border-radius: 10px;
+}
+
+.narrowed {
+	width: 876px;
+}
+
+.new-project-btn {
+	margin-top: 40px;
+	font-weight: 700;
+}
+
+/* https://www.w3schools.com/css/css3_buttons.asp */
+.fancy:hover, .fancy:focus {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	background-color: #00d;
+	color: white;
+	cursor: pointer;
+}
+
+video {
+	width: 900px;
+	/*
+	max-width: 640px;
+	max-height: 640px;
+	*/
+	text-align: center;
+}
+
+h1, h2 {
+	text-align: center;
+}
+
+h1 {
+	font-size: 64px;
+}
+
+h2 {
+	font-size: 40px;
+}
+
