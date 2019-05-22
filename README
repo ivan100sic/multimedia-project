@@ -1,6 +1,11 @@
-Setup instructions for Ubuntu 16.04:
+# Setup instructions for Ubuntu 16.04:
 
 sudo python3 -m pip install flask
 sudo apt install ffmpeg
+g++ -std=c++14 -O2 gmajor.cpp -o gmajor
+g++ -std=c++14 -O2 reverb.cpp -o reverb
+g++ -std=c++14 -O2 test-effect.cpp -o test-effect
+
+# To run:
 bash server.sh
 
